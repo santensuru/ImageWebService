@@ -1,0 +1,5 @@
+Lakukan seperti dibawah...
+
+C:\Python27>
+
+python Scripts/ladon-2.7-ctl.py testserve C:\Users\AdminMobility\Documents\github\ImageWebService\server.py -p 8080
