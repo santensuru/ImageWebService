@@ -1,16 +1,36 @@
 #!/usr/bin/env python
 
 from suds.client import Client
+from PIL import Image
+import base64
+import StringIO
 
-client = Client('http://localhost:8080/Calculator/soap/description')
+client = Client('http://localhost:8080/ImageConverter/soap/description')
 
-print 'Penjumlahan         : 2 + 3    =', client.service.adder(2.0,3.0)
-print 'Pembulatan ke atas  : 5.6      =', client.service.ceiler(5.6)
-print 'Pembulatan ke bawah : 5.6      =', client.service.floorer(5.6)
-print 'Perpangkatan        : 2^3      =', client.service.power(2.0,3.0)
-print 'Perakaran           : 8 akar 3 =', client.service.sqrter(8.0,3.0)
-print 'Faktorial           : 12       =', client.service.factorializer(12)
-print 'Sinus   (derajat)   : sin 30   =', client.service.sinus(30.0)
-print 'Cosinus (derajat)   : cos 30   =', client.service.cosinus(30.0)
-print 'Tangen  (derajat)   : tan 30   =', client.service.tangent(30.0)
+img = Image.open("lena.png")
+format = "png"
 
+# Convert to string
+output = StringIO.StringIO()
+img.save(output, format)
+contents = output.getvalue()
+output.close()
+
+# Get grayscale
+bytes = bytearray(contents)
+s = base64.b64encode(bytes)
+
+input = client.service.grayscale(s, format)
+
+ba = bytearray(base64.b64decode(input))
+
+# Convert to save
+buff = StringIO.StringIO()
+buff.write(ba)
+#seek back to the beginning so the whole thing will be read by PIL
+buff.seek(0)
+img = Image.open(buff)
+
+img.save("gs2_lena.png", format)
+
+print "done"
