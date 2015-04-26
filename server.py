@@ -16,11 +16,11 @@ class ImageConverter(object):
         buff.write(ba)
         #seek back to the beginning so the whole thing will be read by PIL
         buff.seek(0)
-        img = Image.open(buff).convert('LA')
+        img = Image.open(buff).convert('L')
         
         # Convert to string
         output = StringIO.StringIO()
-        img.save(output, format)
+        img.save(output, "png")
         contents = output.getvalue()
         output.close()
 

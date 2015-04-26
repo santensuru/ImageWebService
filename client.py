@@ -39,7 +39,7 @@ thread.start_new_thread( do_convert, (files, "1", datetime.datetime.now()) )
 
 
 def do_convert( list_name, name, time ):
-    client = Client('http://localhost:8080/ImageConverter/soap/description')
+    client = Client('http://' + name + ':8080/ImageConverter/soap/description')
     print name, time    
     
     for file in list_name:
@@ -78,7 +78,8 @@ def do_convert( list_name, name, time ):
 
 
 try:
-    thread.start_new_thread( do_convert, (files, "1", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files, "localhost", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files2, "10.151.12.201", datetime.datetime.now()) )
 except:
     print "Error"
 
