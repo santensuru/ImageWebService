@@ -12,8 +12,13 @@ import os
 client = Client('http://localhost:8080/ImageConverter/soap/description')
 '''
 
+'''
 path = "/home/pi/image/"
 dest_path = "/home/pi/image/bw/"
+'''
+
+path = "C:/cygwin64/home/user/coba/SISTER/"
+dest_path = "C:/cygwin64/home/user/coba/SISTER/BW4/"
 
 dir = os.listdir(path)
 
@@ -95,8 +100,9 @@ thread.start_new_thread( do_convert, (files, "1", datetime.datetime.now()) )
 # Using load balancer
 
 try:
-    thread.start_new_thread( do_convert, (files, "localhost:6060", datetime.datetime.now()) )
-    thread.start_new_thread( do_convert, (files2, "localhost:6060", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files, "10.151.12.100:6060", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files2, "10.151.12.100:6060", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files3, "10.151.12.100:6060", datetime.datetime.now()) )
 except:
     print "Error"
 
