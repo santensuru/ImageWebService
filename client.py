@@ -16,6 +16,7 @@ path = "/home/pi/image/"
 dest_path = "/home/pi/image/bw/"
 
 dir = os.listdir(path)
+
 files = []
 files2 = []
 files3 = []
@@ -36,10 +37,8 @@ for file in dir:
 thread.start_new_thread( do_convert, (files, "1", datetime.datetime.now()) )
 '''
 
-
-
 def do_convert( list_name, name, time ):
-    client = Client('http://' + name + ':8080/ImageConverter/soap/description')
+    client = Client('http://' + name + '/ImageConverter/soap/description')
     print name, time    
     
     for file in list_name:
@@ -76,10 +75,28 @@ def do_convert( list_name, name, time ):
         
         print "done", "gs_" + file, datetime.datetime.now()
 
+# Not using load balancer
+'''
+try:
+    thread.start_new_thread( do_convert, (files, "localhost:8080", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files2, "10.151.12.201:8080", datetime.datetime.now()) )
+except:
+    print "Error"
+
+while 1:
+    pass
+print "???"
+'''
+
+'''
+thread.start_new_thread( do_convert, (files, "1", datetime.datetime.now()) )
+'''
+
+# Using load balancer
 
 try:
-    thread.start_new_thread( do_convert, (files, "localhost", datetime.datetime.now()) )
-    thread.start_new_thread( do_convert, (files2, "10.151.12.201", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files, "localhost:6060", datetime.datetime.now()) )
+    thread.start_new_thread( do_convert, (files2, "localhost:6060", datetime.datetime.now()) )
 except:
     print "Error"
 
@@ -87,6 +104,3 @@ while 1:
     pass
 print "???"
 
-'''
-thread.start_new_thread( do_convert, (files, "1", datetime.datetime.now()) )
-'''
