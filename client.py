@@ -17,8 +17,11 @@ path = "/home/pi/image/"
 dest_path = "/home/pi/image/bw/"
 '''
 
-path = "C:/cygwin64/home/user/coba/SISTER/"
-dest_path = "C:/cygwin64/home/user/coba/SISTER/BW4/"
+#path = "C:/cygwin64/home/user/coba/SISTER/"#
+#dest_path = "C:/cygwin64/home/user/coba/SISTER/BW4/"
+
+path="C:/Users/simulasi/Documents/sister/data/"
+dest_path="C:/Users/simulasi/Documents/sister/data/BW/"
 
 dir = os.listdir(path)
 
